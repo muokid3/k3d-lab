@@ -39,8 +39,10 @@ kubectl krew update
 kubectl krew install get-all change-ns ingress-nginx janitor doctor ns pod-dive pod-inspect pod-lens pod-logs pod-shell podevents service-tree sick-pods view-secret
 
 # Add some more aliases
-echo 'alias less="less -R"' >> .bashrc
-echo 'alias jq="jq -C"' >> .bashrc
+echo 'alias less="less -R"' >> ~/.bashrc
+echo 'alias jq="jq -C"' >> ~/.bashrc
+echo 'export VISUAL=vim' >> ~/.bashrc
+echo 'export EDITOR="$VISUAL"' >> ~/.bashrc
 
 # tidy up
 rm -f ~/provision.sh
