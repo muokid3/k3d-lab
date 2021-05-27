@@ -1,0 +1,52 @@
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  path: /grafana
+  pathType: Prefix
+  hosts:
+  - ""
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      access: proxy
+      url: http://prometheus-kube-prometheus-prometheus:9090
+      basicAuthUser: admin
+      withCredentials: true
+      isDefault: true
+      secureJsonData:
+        basicAuthPassword: prom-operator
+      version: 1
+      editable: true
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+    - disableDeletion: true
+      editable: true
+      folder: null
+      name: default
+      options:
+        path: /var/lib/grafana/dashboards/default
+      orgId: 1
+      type: file
+
+dashboards:
+  default:
+    "K8S Cluster Monitor":
+      gnetId: 14249
+      revision: 1
+      datasource: Prometheus
+
+plugins: "yesoreyeram-boomtheme-panel, grafana-github-datasource, grafana-clock-panel, grafana-piechart-panel"
+
+grafana.ini:
+  server:
+    root_url: /grafana/
+    serve_from_sub_path: true
+
