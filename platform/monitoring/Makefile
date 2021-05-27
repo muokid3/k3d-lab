@@ -1,6 +1,6 @@
 default: install-namespace
 
-install: install-namespace install-prometheus install-grafana 
+install: repo install-namespace install-prometheus install-grafana 
 
 delete: delete-grafana delete-prometheus delete-namespace
 
@@ -8,11 +8,9 @@ install-namespace:
 	@kubectl apply -f namespace.yaml
 
 install-prometheus:
-	@make -C prometheus repo
 	@make -C prometheus install
 
 install-grafana:
-	@make -C grafana repo
 	@make -C grafana install
 
 delete-grafana:
@@ -24,7 +22,9 @@ delete-prometheus:
 delete-namespace:
 	@kubectl delete -f namespace.yaml
 
-update-repo:
+repo:
+	@make -C prometheus repo
+	@make -C grafana repo
 	@helm repo update
 
 
