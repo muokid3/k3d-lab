@@ -8,7 +8,7 @@ repo:
 	@helm repo update
 
 namespace:
-	@kubectl apply namespace.yaml
+	kubectl apply -f namespace.yaml
 
 install-all:
 	@make -C fluentbit install
@@ -17,4 +17,4 @@ install-all:
 delete-all:
 	@make -C fluentbit delete
 	@make -C elastic delete
-	@kubectl delete -f namespace.yaml
+	kubectl delete -f namespace.yaml
