@@ -1,0 +1,31 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-corpora-docker-image-from-git-source
+spec:
+  params:
+    - name: pathToDockerFile
+      type: string
+      default: Dockerfile
+    - name: pathToContext
+      type: string
+      default: $(resources.inputs.corpora-source.path)/apps/corpora
+  resources:
+    inputs:
+      - name: corpora-source
+        type: git
+    outputs:
+      - name: corpora-image 
+        type: image
+  steps:
+    - name: build
+      image: gcr.io/kaniko-project/executor:latest
+      env:
+        - name: "DOCKER_CONFIG"
+          value: "/root/.docker"
+      command:
+      - /kaniko/executor
+      args:
+      - --context=$(params.pathToContext)
+      - --dockerfile=$(params.pathToDockerFile)
+      - --destination=$(resources.outputs.corpora-image.url)

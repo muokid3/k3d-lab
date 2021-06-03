@@ -8,7 +8,7 @@ delete:
 	@kubectl delete -f pipeline-resource.yaml -f task.yaml -f task-runner.yaml
 
 status:
-	@kubectl tkn tr describe  build-corpora-image-from-git-source-task-run
+	@kubectl tkn taskrun describe  build-corpora-image-from-git-source-task-run
 
 desct:
 	@kubectl tkn task describe  build-corpora-image-from-git-source
