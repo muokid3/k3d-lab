@@ -1,0 +1,29 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-corpora-docker-image-from-git-source
+spec:
+  resources:
+    inputs:
+      - name: corpora-source
+        type: git
+  params:
+    - name: pathToDockerFile
+      type: string
+      default: Dockerfile
+    - name: pathToContext
+      type: string
+      default: $(resources.inputs.corpora-source.path)/apps/corpora
+  steps:
+    - name: echo
+      image: busybox
+      command: ["echo", "$(params.pathToDockerFile)"]
+    - name: pwd
+      image: busybox
+      command: ["pwd"]
+    - name: ls 
+      image: busybox
+      command: ["ls", "-gAlFh", "$(params.pathToContext)"]
+    - name: ls2
+      image: busybox
+      command: ["ls", "-gAlFh"]

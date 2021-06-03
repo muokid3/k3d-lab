@@ -1,0 +1,10 @@
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: corpora-source
+spec:
+  type: git
+  params:
+    - name: url
+      value: https://github.com/muokid3/k3d-lab
